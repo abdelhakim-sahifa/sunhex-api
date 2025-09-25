@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const serverless = require('serverless-http');
 const healthRoute = require('./health');
 const countriesRoute = require('./countries');
 const generateRoute = require('./generate');
@@ -43,12 +42,9 @@ app.use((req, res) => {
 });
 
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
 
-module.exports = serverless(app);
-
-if (process.env.NODE_ENV !== 'production') {
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
-    });
-}
+module.exports = app;
